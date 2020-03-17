@@ -46,7 +46,6 @@ let lineToTokenObjects = (line, lineNum) => {
             }
             i += 1;
         }
-
         col += lexem.length + 1;
         return obj;
     });
@@ -55,7 +54,6 @@ let lineToTokenObjects = (line, lineNum) => {
 // just export the lexer function
 module.exports = (orbScript) => {
     let tokens = [],
-    //tokenLen = langTokens.length,
     lines = orbScript.split(';');
     return lines.map((currentLine, i) => {
         return lineToTokenObjects(currentLine, i);
