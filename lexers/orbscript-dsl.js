@@ -25,6 +25,7 @@ const langTokens = [{
 // return an array of token objects for the given text line
 let lineToTokenObjects = (line, lineNum) => {
     let lineTokens = line.split(' '),
+    col = 0,
     tokenLen = langTokens.length;
     return lineTokens.map((lexem, lineTokenIndex) => {
         let i = 0,
@@ -35,6 +36,7 @@ let lineToTokenObjects = (line, lineNum) => {
             obj.lexem = lexem;
             obj.position = {
                 line: lineNum,
+                col: col,
                 token: lineTokenIndex
             };
             if (m) {
@@ -44,6 +46,8 @@ let lineToTokenObjects = (line, lineNum) => {
             }
             i += 1;
         }
+
+        col += lexem.length + 1;
         return obj;
     });
 };
