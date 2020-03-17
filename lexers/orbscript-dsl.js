@@ -26,15 +26,19 @@ const langTokens = [{
 let lineToTokenObjects = (line, lineNum) => {
     let lineTokens = line.split(' '),
     tokenLen = langTokens.length;
-    return lineTokens.map((lexem) => {
+    return lineTokens.map((lexem, lineTokenIndex) => {
         let i = 0,
         obj = {};
         while (i < tokenLen) {
             let t = langTokens[i];
             m = lexem.match(t.regEx);
             obj.lexem = lexem;
+            obj.position = {
+                line: lineNum,
+                token: lineTokenIndex
+            };
             if (m) {
-                obj.desc = t.desc;
+                obj.ltID = i + '-' + t.desc;
                 obj.type = t.type;
                 break;
             }
