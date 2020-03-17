@@ -23,7 +23,8 @@ var langTokens = [{
     }
 ];
 
-let lineToTokenObjects = function (line) {
+// return an array of token objects for the given text line
+let lineToTokenObjects = function (line, lineNum) {
 
     let lineTokens = line.split(' '),
     tokenLen = langTokens.length;
@@ -60,36 +61,7 @@ module.exports = function (orbScript) {
     var tokens = [],
     //tokenLen = langTokens.length,
     lines = orbScript.split(';');
-    return lines.map(currentLine => {
-
-        return lineToTokenObjects(currentLine);
-        /*
-        let lineTokens = currentLine.split(' ');
-
-        return lineTokens.map((lexem) => {
-
-        let i = 0,
-        obj = {};
-        while (i < tokenLen) {
-
-        let t = langTokens[i];
-        m = lexem.match(t.regEx);
-
-        obj.lexem = lexem;
-        if (m) {
-
-        obj.desc = t.desc;
-        obj.type = t.type;
-
-        break;
-        }
-
-        i += 1;
-        }
-
-        return obj;
-
-        });
-         */
+    return lines.map((currentLine, i) => {
+        return lineToTokenObjects(currentLine, i);
     });
 };
