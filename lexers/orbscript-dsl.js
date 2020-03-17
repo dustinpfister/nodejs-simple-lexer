@@ -23,38 +23,73 @@ var langTokens = [{
     }
 ];
 
+let lineToTokenObjects = function (line) {
+
+    let lineTokens = line.split(' '),
+    tokenLen = langTokens.length;
+
+    return lineTokens.map((lexem) => {
+
+        let i = 0,
+        obj = {};
+        while (i < tokenLen) {
+
+            let t = langTokens[i];
+            m = lexem.match(t.regEx);
+
+            obj.lexem = lexem;
+            if (m) {
+
+                obj.desc = t.desc;
+                obj.type = t.type;
+
+                break;
+            }
+
+            i += 1;
+        }
+
+        return obj;
+
+    });
+
+};
+
 // just export the lexer function
 module.exports = function (orbScript) {
     var tokens = [],
-    tokenLen = langTokens.length,
+    //tokenLen = langTokens.length,
     lines = orbScript.split(';');
     return lines.map(currentLine => {
 
+        return lineToTokenObjects(currentLine);
+        /*
         let lineTokens = currentLine.split(' ');
 
         return lineTokens.map((lexem) => {
 
-            let i = 0,
-            obj = {};
-            while (i < tokenLen) {
+        let i = 0,
+        obj = {};
+        while (i < tokenLen) {
 
-                let t = langTokens[i];
-                m = lexem.match(t.regEx);
+        let t = langTokens[i];
+        m = lexem.match(t.regEx);
 
-                obj.lexem = lexem;
-                if (m) {
+        obj.lexem = lexem;
+        if (m) {
 
-                    obj.desc = t.desc;
-                    obj.type = t.type;
+        obj.desc = t.desc;
+        obj.type = t.type;
 
-                    break;
-                }
+        break;
+        }
 
-                i += 1;
-            }
+        i += 1;
+        }
 
-            return obj;
+        return obj;
 
         });
+         */
     });
 };
